@@ -1,0 +1,9 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/CBGQuocDai/DA_Backend.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/CBGQuocDai/DA_Frontend.git
+[submodule "mobile"]
+	path = mobile
+	url = https://github.com/CBGQuocDai/DA_Mobile.git
