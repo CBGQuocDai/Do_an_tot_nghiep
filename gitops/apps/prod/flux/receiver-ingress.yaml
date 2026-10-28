@@ -1,0 +1,19 @@
+# Expose notification-controller (service webhook-receiver) qua Traefik, chỉ path /hook
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flux-webhook
+  namespace: flux-system
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: flux-webhook.daidq.io.vn
+      http:
+        paths:
+          - path: /hook
+            pathType: Prefix
+            backend:
+              service:
+                name: webhook-receiver
+                port:
+                  number: 80

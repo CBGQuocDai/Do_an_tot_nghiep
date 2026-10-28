@@ -1,0 +1,24 @@
+# Flux quét Harbor để lấy danh sách tag; CI gọi webhook (receiver.yaml) để quét ngay,
+# interval chỉ là dự phòng khi webhook lỗi
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: da-backend
+  namespace: flux-system
+spec:
+  image: registry.daidq.io.vn/do_an/da-backend
+  interval: 30m0s
+  secretRef:
+    name: harbor-pull
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: da-frontend
+  namespace: flux-system
+spec:
+  image: registry.daidq.io.vn/do_an/da-frontend
+  interval: 30m0s
+  secretRef:
+    name: harbor-pull

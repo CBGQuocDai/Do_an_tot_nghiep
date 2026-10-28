@@ -1,0 +1,40 @@
+# Backend giữ context-path /api → build frontend với NEXT_PUBLIC_API_URL=https://api-da.daidq.io.vn/api
+# và CORS_ALLOWED_ORIGINS của backend phải có https://da.daidq.io.vn
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: da-backend
+  namespace: do-an
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: api-da.daidq.io.vn
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: da-backend
+                port:
+                  name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: da-frontend
+  namespace: do-an
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: da.daidq.io.vn
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: da-frontend
+                port:
+                  name: http

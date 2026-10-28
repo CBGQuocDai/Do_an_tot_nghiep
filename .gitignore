@@ -1,0 +1,4 @@
+# Bản rõ secret và age private key — không bao giờ commit
+gitops/secrets.env
+*.agekey
+gitops/apps/prod/secrets/*.tmp

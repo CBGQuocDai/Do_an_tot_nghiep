@@ -1,0 +1,31 @@
+# CI tag image dạng <short-sha>-<run_number> → chọn tag có run_number lớn nhất (bỏ qua "latest")
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: da-backend
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: da-backend
+  filterTags:
+    pattern: '^[a-f0-9]+-(?P<run>[0-9]+)$'
+    extract: '$run'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: da-frontend
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: da-frontend
+  filterTags:
+    pattern: '^[a-f0-9]+-(?P<run>[0-9]+)$'
+    extract: '$run'
+  policy:
+    numerical:
+      order: asc

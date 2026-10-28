@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: da-backend
+  namespace: do-an
+spec:
+  selector:
+    app.kubernetes.io/name: da-backend
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

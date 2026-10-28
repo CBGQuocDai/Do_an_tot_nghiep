@@ -1,0 +1,31 @@
+# Khi ImagePolicy có tag mới → sửa marker $imagepolicy trong apps/prod và commit thẳng lên main.
+# Yêu cầu deploy key của Flux có quyền ghi (bootstrap với --read-write-key).
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: do-an
+  namespace: flux-system
+spec:
+  interval: 30m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: |
+        chore(cd): cập nhật image
+
+        {{ range .Changed.Changes -}}
+        - {{ .OldValue }} -> {{ .NewValue }}
+        {{ end -}}
+    push:
+      branch: main
+  update:
+    path: ./gitops/apps/prod
+    strategy: Setters

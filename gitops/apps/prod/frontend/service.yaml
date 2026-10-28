@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: da-frontend
+  namespace: do-an
+spec:
+  selector:
+    app.kubernetes.io/name: da-frontend
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
