@@ -1,4 +1,4 @@
-# CI tag image dạng <short-sha>-<run_number> → chọn tag có run_number lớn nhất (bỏ qua "latest")
+# CI tag image dạng <short-sha>-<unix time> → chọn tag có số lớn nhất, tức bản build mới nhất (bỏ qua "latest")
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy

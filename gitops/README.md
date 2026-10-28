@@ -4,10 +4,10 @@
 
 ```
 push main (DA_Backend / DA_Frontend)
-  └─ GitHub Actions: test → build & push registry.daidq.io.vn/do_an/<app>:<sha>-<run>
+  └─ GitHub Actions: test → build & push registry.daidq.io.vn/do_an/<app>:<sha>-<unix time>
        └─ POST webhook (HMAC) ──► Flux Receiver ci-image-push
                                     └─ ImageRepository quét Harbor ngay
-                                         └─ ImagePolicy chọn tag có <run> lớn nhất
+                                         └─ ImagePolicy chọn tag có số lớn nhất (mới nhất)
                                               └─ ImageUpdateAutomation sửa tag trong apps/prod, commit lên main
                                                    └─ Kustomization apps apply → rolling update
 ```
