@@ -24,7 +24,7 @@ spec:
       containers:
         - name: frontend
           # Tag do ImageUpdateAutomation tự cập nhật theo marker $imagepolicy, không sửa tay
-          image: registry.daidq.io.vn/do_an/da-frontend:7d42f5d-1 # {"$imagepolicy": "flux-system:da-frontend"}
+          image: registry.daidq.io.vn/do_an/da-frontend:7b6c41c-1793177896 # {"$imagepolicy": "flux-system:da-frontend"}
           ports:
             - name: http
               containerPort: 3000
