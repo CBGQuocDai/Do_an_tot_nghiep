@@ -21,7 +21,7 @@ spec:
       containers:
         - name: backend
           # Tag do ImageUpdateAutomation tự cập nhật theo marker $imagepolicy, không sửa tay
-          image: registry.daidq.io.vn/do_an/da-backend:latest # {"$imagepolicy": "flux-system:da-backend"}
+          image: registry.daidq.io.vn/do_an/da-backend:0db5726-6 # {"$imagepolicy": "flux-system:da-backend"}
           ports:
             - name: http
               containerPort: 8080
