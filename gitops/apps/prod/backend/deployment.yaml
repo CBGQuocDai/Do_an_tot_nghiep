@@ -24,10 +24,10 @@ spec:
           image: registry.daidq.io.vn/do_an/da-backend:0db5726-6 # {"$imagepolicy": "flux-system:da-backend"}
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8083
           env:
             - name: PORT
-              value: "8080"
+              value: "8083"
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /var/secrets/gcp/gcloud.json
           envFrom:
