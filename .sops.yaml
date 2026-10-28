@@ -1,0 +1,9 @@
+# File sinh bởi gitops/scripts/seal-secrets.sh từ AGE_PUBLIC_KEY trong gitops/secrets.env
+creation_rules:
+  # .env / .json: mã hoá toàn bộ giá trị
+  - path_regex: gitops/.*\.sops\.(env|json)$
+    age: age16ez9e4fpjespmd0e2nea0p28c4snaytwcq05t580wts5tdaymvjssz68du
+  # Secret manifest: chỉ mã hoá data/stringData, giữ metadata đọc được
+  - path_regex: gitops/.*\.sops\.yaml$
+    encrypted_regex: ^(data|stringData)$
+    age: age16ez9e4fpjespmd0e2nea0p28c4snaytwcq05t580wts5tdaymvjssz68du
