@@ -8,6 +8,9 @@ metadata:
 spec:
   replicas: 1
   revisionHistoryLimit: 3
+  # hostPort chỉ 1 pod giữ được → tắt pod cũ trước rồi mới tạo pod mới
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: da-backend
@@ -25,6 +28,8 @@ spec:
           ports:
             - name: http
               containerPort: 8083
+              # Giống docker -p 8083:8083 → Cloudflare Tunnel trỏ api-da.daidq.io.vn tới localhost:8083
+              hostPort: 8083
           env:
             - name: PORT
               value: "8083"

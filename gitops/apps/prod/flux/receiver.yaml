@@ -1,6 +1,6 @@
 # Webhook cho GitHub Actions gọi sau khi push image → Flux quét Harbor ngay lập tức.
 # Request phải có header X-Signature: sha256=<HMAC-SHA256(body, token)>.
-# URL: https://flux-webhook.daidq.io.vn + status.webhookPath của Receiver này.
+# URL: http://100.118.32.97:30292 + status.webhookPath của Receiver này (xem webhook-service.yaml).
 apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Receiver
 metadata:

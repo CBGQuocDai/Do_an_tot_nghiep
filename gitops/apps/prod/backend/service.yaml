@@ -1,11 +1,10 @@
-# LoadBalancer → ServiceLB của k3s mở cổng 8083 trên IP node
+# Truy cập nội bộ cluster; từ ngoài vào qua hostPort 8083 trong deployment.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: da-backend
   namespace: do-an
 spec:
-  type: LoadBalancer
   selector:
     app.kubernetes.io/name: da-backend
   ports:

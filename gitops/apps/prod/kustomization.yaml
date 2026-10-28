@@ -5,5 +5,4 @@ resources:
   - secrets
   - backend
   - frontend
-  - ingress.yaml
   - flux

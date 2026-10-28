@@ -5,4 +5,4 @@ resources:
   - image-policies.yaml
   - image-update-automation.yaml
   - receiver.yaml
-  - receiver-ingress.yaml
+  - webhook-service.yaml

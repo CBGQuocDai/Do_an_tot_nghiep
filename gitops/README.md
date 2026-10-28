@@ -20,9 +20,8 @@ gitops/
 │   ├── flux-system/          # do flux bootstrap sinh ra, không sửa tay
 │   └── apps.yaml             # Kustomization "apps" → ./gitops/apps/prod (có giải mã SOPS)
 ├── apps/prod/
-│   ├── backend/, frontend/   # Deployment + Service (namespace do-an)
-│   ├── ingress.yaml          # api-da.daidq.io.vn → backend, da.daidq.io.vn → frontend
-│   ├── flux/                 # ImageRepository, ImagePolicy, ImageUpdateAutomation, Receiver + Ingress webhook
+│   ├── backend/, frontend/   # Deployment (hostPort backend :8083, frontend :3000) + Service
+│   ├── flux/                 # ImageRepository, ImagePolicy, ImageUpdateAutomation, Receiver + Service NodePort webhook :30292
 │   └── secrets/              # *.sops.{env,json,yaml} — đã mã hoá, sinh bằng script
 ├── scripts/seal-secrets.sh   # secrets.env + .env/gcloud.json backend → secret đã mã hoá + .sops.yaml
 └── secrets.env.example       # mẫu cho gitops/secrets.env (gitignore)
@@ -76,7 +75,7 @@ Script sinh `.sops.yaml` và toàn bộ `gitops/apps/prod/secrets/*.sops.*`; b�
 
 ### 4. Hạ tầng
 
-- DNS `da.daidq.io.vn`, `api-da.daidq.io.vn` và `flux-webhook.daidq.io.vn` trỏ về Traefik của cluster.
+- Pod mở hostPort 8083 (backend), 3000 (frontend) trên node; Cloudflare Tunnel trỏ `api-da.daidq.io.vn` → `localhost:8083`, `da.daidq.io.vn` → `localhost:3000`. Webhook Flux ở NodePort 30292.
 - Node k3s phải resolve và pull được `registry.daidq.io.vn` (qua Tailscale).
 
 ### 5. Push và cấu hình GitHub
@@ -91,7 +90,7 @@ Trong **cả 2 repo** DA_Backend và DA_Frontend (Settings → Secrets and varia
 
 | Loại     | Tên                   | Giá trị                                           |
 |----------|-----------------------|---------------------------------------------------|
-| Secret   | `FLUX_WEBHOOK_URL`    | `https://flux-webhook.daidq.io.vn` + webhookPath ở trên |
+| Secret   | `FLUX_WEBHOOK_URL`    | `http://100.118.32.97:30292` + webhookPath ở trên (runner CI đi qua Tailscale) |
 | Secret   | `FLUX_WEBHOOK_TOKEN`  | `FLUX_WEBHOOK_TOKEN` trong `gitops/secrets.env`   |
 | Variable | `NEXT_PUBLIC_API_URL` | `https://api-da.daidq.io.vn/api` (chỉ frontend) |
 

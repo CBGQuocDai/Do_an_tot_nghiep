@@ -1,0 +1,34 @@
+# Cluster tắt Traefik/ServiceLB → expose webhook của notification-controller qua NodePort cố định.
+# CI (runner đã join Tailscale) gọi: http://100.118.32.97:30292 + status.webhookPath của Receiver
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flux-webhook
+  namespace: flux-system
+spec:
+  type: NodePort
+  selector:
+    app: notification-controller
+  ports:
+    - name: http-webhook
+      port: 9292
+      targetPort: http-webhook
+      nodePort: 30292
+---
+# NetworkPolicy allow-webhooks của Flux chỉ cho pod trong cluster gọi vào → mở cho traffic từ ngoài
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-webhooks-external
+  namespace: flux-system
+spec:
+  podSelector:
+    matchLabels:
+      app: notification-controller
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - port: 9292
+          protocol: TCP

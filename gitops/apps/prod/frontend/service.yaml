@@ -1,11 +1,10 @@
-# LoadBalancer → ServiceLB của k3s mở cổng 3000 trên IP node
+# Truy cập nội bộ cluster; từ ngoài vào qua hostPort 3000 trong deployment.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: da-frontend
   namespace: do-an
 spec:
-  type: LoadBalancer
   selector:
     app.kubernetes.io/name: da-frontend
   ports:
